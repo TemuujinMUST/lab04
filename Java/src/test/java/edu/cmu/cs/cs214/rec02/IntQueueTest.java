@@ -93,6 +93,11 @@ public class IntQueueTest {
     }
 
     @Test
+    public void testDequeueEmptyQueue() {
+        assertNull(mQueue.dequeue());
+    }
+
+    @Test
     public void testContent() throws IOException {
         // This is an example unit test
         InputStream in = new FileInputStream("src/test/resources/data.txt");
@@ -113,4 +118,24 @@ public class IntQueueTest {
         }
     }
 
+    @Test
+    public void testClear() {
+        mQueue.enqueue(1);
+        mQueue.enqueue(2);
+        mQueue.clear();
+        assertTrue(mQueue.isEmpty());
+        assertNull(mQueue.peek());
+    }
+
+    @Test
+    public void testEnsureCapacity() {
+        for (int i = 0; i < 15; i++) {
+            mQueue.enqueue(i);
+        }
+        assertEquals(15, mQueue.size());
+        for (int i = 0; i < 15; i++) {
+            assertEquals(Integer.valueOf(i), mQueue.dequeue());
+        }
+        assertTrue(mQueue.isEmpty());
+    }
 }
